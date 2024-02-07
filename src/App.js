@@ -1,46 +1,44 @@
 import { useState } from 'react';
+import Board from './Board';
 import Button from './Button';
-import Dice from './Dice';
+import './App.css';
 
 function random(n) {
   return Math.ceil(Math.random() * n);
 }
 
 function App() {
-  const [color, setColor] = useState('red');
-  const [num, setNum] = useState(1);
+  const [myHistory, setMyHistory] = useState([]);
+  const [otherHistory, setOtherHistory] = useState([]);
 
   const handleRollClick = () => {
-    const nextNum = random(6);
-    setNum(nextNum);
+    const nextMyNum = random(6);
+    const nextOtherNum = random(6);
+    setMyHistory([...myHistory, nextMyNum]);
+    setOtherHistory([...otherHistory, nextOtherNum]);
     // eslint-disable-next-line
-    console.log(nextNum);
+    // console.log(sum);
   };
 
   const handleClearClick = () => {
-    setNum(1);
-    // eslint-disable-next-line
-    console.log('clear!');
-  };
-
-  const handleColor = () => {
-    if (color === 'red') {
-      setColor('blue');
-    } else {
-      setColor('red');
-    }
-    // eslint-disable-next-line
-    console.log('색 변경!');
+    setMyHistory([]);
+    setOtherHistory([]);
   };
 
   return (
-    <div>
+    <div className="App">
       <div>
-        <Button onClick={handleRollClick}>던지기</Button>
-        <Button onClick={handleClearClick}>처음부터</Button>
-        <Button onClick={handleColor}>색 변경</Button>
+        <Button className="App-button" onClick={handleRollClick} color="blue">
+          바꾸기
+        </Button>
+        <Button className="App-button" onClick={handleClearClick} color="red">
+          처음부터
+        </Button>
       </div>
-      <Dice color={color} num={num} />
+      <div>
+        <Board name="나" color="blue" gameHistory={myHistory} />
+        <Board name="상대" color="red" gameHistory={otherHistory} />
+      </div>
     </div>
   );
 }

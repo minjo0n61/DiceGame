@@ -1,19 +1,13 @@
-// import PropTypes from 'prop-types';
+import './Button.css';
 
-function Button({ children, onClick }) {
+// eslint-disable-next-line
+function Button({ children, onClick, color = 'blue', className = '' }) {
+  const classNames = `Button ${color} ${className}`;
   return (
-    <button type="button" onClick={onClick}>
+    <button type="button" onClick={onClick} className={classNames}>
       {children}
     </button>
   );
 }
 
 export default Button;
-
-// Button.propsTypes = {
-//   children: PropTypes.node.isRequired,
-// };
-
-// Button.defaultProps = {
-//   children: 'text',
-// };
